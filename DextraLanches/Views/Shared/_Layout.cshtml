@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    @System.Web.Optimization.Scripts.Render("~/Scripts/jquery-3.1.1.js")
+    @System.Web.Optimization.Scripts.Render("~/Scripts/bootstrap.js")
+    @System.Web.Optimization.Styles.Render("~/Content/bootstrap.css")
+    <!--Script js do Bootstrap  - Colar após o carregamento do Jquery-->
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-static-top">
+
+        <div class="container-fluid">
+
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#exemplo-navbar-collapse" aria-expanded="false">
+
+                    <span class="sr-only">Navegacao</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+
+                </button>
+
+                <!-- Título Direita do menu-->
+                <a class="navbar-brand" href="#" target="_blank">Dextra Lanches</a>
+
+            </div>
+            <!-- Menu Fim -->
+
+            <div class="collapse navbar-collapse" id="exemplo-navbar-collapse">
+
+                <!-- Links Inicio -->
+                <ul class="nav navbar-nav navbar-left">
+
+                    <!-- Menu Cliente dropdown Inicio -->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu Cliente<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="~/Cardapio/">Cardápios</a> </li>
+                            <li><a href="#">Meus Pedidos</a> </li>
+                            <li class="divider"></li>
+                            <li><a href="#">Promoções</a> </li>
+                            <li><a href="#">Drinks</a> </li>
+                            <li class="divider"></li>
+                        </ul>
+                    </li>
+                    <!-- Menu Cliente dropdown Fim -->
+                    <!-- Menu Operador dropdown Inicio -->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu Operador<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="~/Views/Cardapio/Index.cshtml">Cardápios</a> </li>
+                            <li><a href="#">Lanches</a> </li>
+                            <li class="divider"></li>
+                            <li><a href="#">Ingredientes</a> </li>
+                            <li><a href="#">Promoções</a> </li>
+                            <li class="divider"></li>
+                        </ul>
+                    </li>
+                    <!-- Menu Operador   dropdown Fim -->
+
+
+
+                </ul>
+                <!-- Links Fim -->
+                <!-- Caixa de Pesquisa Inicio -->
+                <div class="navbar-right">
+
+                    <!-- Formulario caixa pesquisa Inicio -->
+                    <form class="navbar-form" role="search" method="get" action="#">
+
+                        <div class="input-group">
+
+                            <input type="text" class="form-control" placeholder="Digite sua pesquisa..." name="Filtro" id="Filtro">
+
+                            <!-- Display icone Lupa -->
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                            </div>
+
+                        </div>
+
+                    </form>
+                    <!-- Formulario caixa pesquisa Fim -->
+
+                </div>
+                <!-- Caixa de Pesquisa Fim -->
+
+            </div>
+        </div>
+
+    </div>
+
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>
+@RenderSection("scripts", required: false)

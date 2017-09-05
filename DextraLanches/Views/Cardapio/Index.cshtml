@@ -1,0 +1,41 @@
+﻿@model List<DextraLanches.Models.CardapioModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<legend>Cardápios</legend>
+
+
+@{
+    
+    WebGrid Grid = new WebGrid(source: @Model, rowsPerPage: 8);
+}
+
+
+        @if (Grid.Rows.Count > 0)
+        {
+            @Grid.GetHtml(
+             tableStyle: "table table-striped",
+
+            numericLinksCount: 7,
+            columns: Grid.Columns(
+            Grid.Column("ID", header: "ID", format: @<text>@item.ID</text>),
+                    Grid.Column("Nome", header: "Nome", format: @<text>@item.Nome</text>),
+                    Grid.Column("Descricao", header: "Descriçao", format: @<text>@item.Descricao</text>),
+             Grid.Column("Nome", header: "Nome", format: @<text>@item.Nome</text>),
+                    Grid.Column("Descricao", header: "Descriçao", format: @<text>@item.Descricao</text>)
+
+                                                                                      )
+                                                                                      )
+
+        }
+        else
+        {
+            <p>Ops. Não há registros.</p>
+        }
+
+@section scripts{
+    @*<link rel="stylesheet" href="~/Content/Style.css">
+    <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css">*@
+}
