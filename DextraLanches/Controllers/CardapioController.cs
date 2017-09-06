@@ -18,12 +18,15 @@ namespace DextraLanches.Controllers
 
             this.LancheService = new LancheService();
             this.IngredienteService = new IngredienteService();
+            this.PedidoService = new PedidoService();
+            
         }
         //
         // GET: /Cardapio/
         private CardapioService CardapioService;
         private LancheService LancheService;
         private IngredienteService IngredienteService;
+        private PedidoService PedidoService;
 
         [HttpGet]
         public ActionResult Index()
@@ -75,7 +78,28 @@ namespace DextraLanches.Controllers
         {
             JsonResult resultado = new JsonResult();
 
-           
+            char[] charSep = new char[] {'|'};
+            var IngredientesSplit = Pedido.Split(charSep, StringSplitOptions.RemoveEmptyEntries);
+            var IngredientesIDs = new List<long>();
+
+            foreach (var ingrediente in IngredientesSplit)
+            {
+                IngredientesIDs.Add(long.Parse(ingrediente));
+            }
+
+            //Montar o lanche a partir dos ingredientes.
+            var lancheMontado = this.LancheService.MontarLanche(IngredientesIDs);
+
+            //Cria um pedido
+            var pedido = new PedidoModel();
+
+            pedido.Lanches.Add(lancheMontado);
+
+            this.PedidoService.Adicionar(pedido);
+
+            resultado.Data = "Sucesso";
+            resultado.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
             return resultado;
         }
 

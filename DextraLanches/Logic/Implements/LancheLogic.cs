@@ -45,6 +45,31 @@ namespace DextraLanches.Logic.Implements
            return  this.LancheRepository.Remover(ID);
         }
 
+        /// <summary>
+        /// Método para receber uma lista de ingredientes e montar um lanche.
+        /// Este método não aplica a promoção.
+        /// </summary>
+        /// <param name="?"></param>
+        /// <returns></returns>
+        public LancheModel MontarLanche(List<long> Ingredientes)
+        {
+            List<IngredienteModel> ListaIngredientes = new List<IngredienteModel>();
+
+            for(int i =0; i < Ingredientes.Count; i++)
+            {
+                ListaIngredientes.Add((IngredienteModel)this.IngredienteLogic.Buscar(Ingredientes[i]));
+            }
+
+            LancheModel LancheMontado = new LancheModel();
+
+            LancheMontado.Nome = "Meu Lanche";
+            LancheMontado.Descricao = "Lanche montado pelo cliente.";
+            LancheMontado.ListaIngredientes = ListaIngredientes;
+
+            return LancheMontado;
+
+        }
+
         public BaseEntity ConvertModelToEntity(BaseModel m)
         {
             LancheEntity e = new LancheEntity();

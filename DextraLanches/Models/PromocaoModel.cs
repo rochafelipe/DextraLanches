@@ -8,5 +8,7 @@ namespace DextraLanches.Models
 {
     public class PromocaoModel : BaseModel
     {
+        public string RegraNegocio { get; set; }
+
     }
 }

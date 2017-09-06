@@ -1,0 +1,43 @@
+﻿@model DextraLanches.Models.PedidoViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Meus Pedidos</h2>
+
+@if (Model.Pedidos.Count > 0)
+{
+    foreach (var pedido in Model.Pedidos)
+    {
+        foreach (var lanche in pedido.Lanches)
+        {
+            <legend>@lanche.Nome</legend>
+            <div class="col-lg-12">
+                <div class="col-lg-3">
+
+                    <figure class="figure">
+                        <img src="~/Images/lanche1.jpg" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
+                        <figcaption class="figure-caption">@lanche.Nome  @lanche.Preco</figcaption>
+                    </figure>
+
+
+                </div>
+                <div class="col-lg-3">
+                    <span>
+                        @lanche.Descricao
+                        <br />
+                        <img src="~/Images/desconto.png" />
+                    </span>
+                </div>
+            </div>
+            <legend></legend>
+        }
+    }
+    
+    <input type="button" class="btn-success" value="Confirmar" />
+}
+else
+{
+    <span>Sem pedidos registrados.</span>
+}

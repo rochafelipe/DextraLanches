@@ -1,5 +1,4 @@
 ﻿using DextraLanches.Logic.Implements;
-using DextraLanches.Models;
 using DextraLanches.Service.Abstraction;
 using System;
 using System.Collections.Generic;
@@ -8,19 +7,18 @@ using System.Web;
 
 namespace DextraLanches.Service.Implements
 {
-    public class LancheService : IService
+    public class PedidoService : IService
     {
+        private PedidoLogic PedidoLogic;
 
-        private LancheLogic LancheLogic;
-
-        public LancheService()
+        public PedidoService()
         {
-            this.LancheLogic = new LancheLogic();
+            this.PedidoLogic = new PedidoLogic();
         }
 
         public Models.Abstraction.BaseModel Adicionar(Models.Abstraction.BaseModel model)
         {
-            throw new NotImplementedException();
+            return this.PedidoLogic.Adicionar(model);
         }
 
         public Models.Abstraction.BaseModel Atualizar(Models.Abstraction.BaseModel model)
@@ -30,7 +28,7 @@ namespace DextraLanches.Service.Implements
 
         public List<Models.Abstraction.BaseModel> Buscar()
         {
-            return this.LancheLogic.Buscar();
+            return this.PedidoLogic.Buscar();
         }
 
         public Models.Abstraction.BaseModel Buscar(long ID)
@@ -42,11 +40,5 @@ namespace DextraLanches.Service.Implements
         {
             throw new NotImplementedException();
         }
-
-        public LancheModel MontarLanche(List<long> Ingredientes)
-        {
-            return this.LancheLogic.MontarLanche(Ingredientes);
-        }
-
     }
 }

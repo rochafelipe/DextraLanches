@@ -28,6 +28,8 @@
                 <br />
                 <img src="~/Images/desconto.png" />
             </span>
+            <div class="bottom"><input type="button" class="btn-success btnComprar" value="Comprar" /></div>
+            
         </div>
     </div>
     <legend></legend>
@@ -127,7 +129,10 @@
                     totalPrice += parseFloat(data["Preco"]);
 
                     $("#total").val(totalPrice);
-                    $("#Pedido").val($("#Pedido").val() +"|"+ data["Nome"])
+                    $("#Pedido").val($("#Pedido").val() + "|" + data["ID"]);
+
+                   
+
                 },
                 error: function () {
                     $(".GifAjaxLoaderEntrega").hide();
@@ -157,7 +162,7 @@
                 success: function (data) {
 
                     var tbl = $("#tblIngredientes");
-                  
+                    document.location.href = "../Pedido/Index";
                 },
                 error: function () {
                     $(".GifAjaxLoaderEntrega").hide();

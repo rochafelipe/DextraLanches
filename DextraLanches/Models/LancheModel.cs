@@ -25,5 +25,7 @@ namespace DextraLanches.Models
                 return ListaIngredientes.Sum(i => i.Preco);
             }
         }
+
+        public List<PromocaoModel> Promocoes { get; set; }
     }
 }

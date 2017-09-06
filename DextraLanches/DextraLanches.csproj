@@ -121,6 +121,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Controllers\CardapioController.cs" />
     <Compile Include="Controllers\LancheController.cs" />
+    <Compile Include="Controllers\PedidoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -129,21 +130,25 @@
     <Compile Include="Logic\Implements\FornecedorLogic.cs" />
     <Compile Include="Logic\Implements\IngredienteLogic.cs" />
     <Compile Include="Logic\Implements\LancheLogic.cs" />
+    <Compile Include="Logic\Implements\PedidoLogic.cs" />
     <Compile Include="Logic\Implements\PromocaoLogic.cs" />
     <Compile Include="Models\Abstraction\BaseModel.cs" />
     <Compile Include="Models\CardapioModel.cs" />
+    <Compile Include="Models\PedidoModel.cs" />
     <Compile Include="Models\ViewModel\CardapioViewModel.cs" />
     <Compile Include="Models\FornecedorModel.cs" />
     <Compile Include="Models\IngredienteModel.cs" />
     <Compile Include="Models\LancheModel.cs" />
     <Compile Include="Models\PromocaoModel.cs" />
     <Compile Include="Models\ViewModel\LancheViewModel.cs" />
+    <Compile Include="Models\ViewModel\PedidoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Abstraction\IRepository.cs" />
     <Compile Include="Repository\DAL\CardapioRepository.cs" />
     <Compile Include="Repository\DAL\FornecedorRepository.cs" />
     <Compile Include="Repository\DAL\IngredienteRepository.cs" />
     <Compile Include="Repository\DAL\LancheRepository.cs" />
+    <Compile Include="Repository\DAL\PedidoRepository.cs" />
     <Compile Include="Repository\DAL\PromocaoRepository.cs" />
     <Compile Include="Repository\Entities\BaseEntity.cs" />
     <Compile Include="Repository\Entities\CardapioEntity.cs" />
@@ -151,12 +156,14 @@
     <Compile Include="Repository\Entities\FornecedorIngredienteEntity.cs" />
     <Compile Include="Repository\Entities\IngredienteEntity.cs" />
     <Compile Include="Repository\Entities\LancheEntity.cs" />
+    <Compile Include="Repository\Entities\PedidoEntity.cs" />
     <Compile Include="Repository\Entities\PromocaoEntity.cs" />
     <Compile Include="Service\Abstraction\IService.cs" />
     <Compile Include="Service\Implements\CardapioService.cs" />
     <Compile Include="Service\Implements\FornecedorService.cs" />
     <Compile Include="Service\Implements\IngredienteService.cs" />
     <Compile Include="Service\Implements\LancheService.cs" />
+    <Compile Include="Service\Implements\PedidoService.cs" />
     <Compile Include="Service\Implements\PromocaoService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +218,7 @@
     <Content Include="Views\Shared\_Message.cshtml" />
     <Content Include="Views\Lanche\Index.cshtml" />
     <Content Include="Views\Cardapio\CardapioCliente.cshtml" />
+    <Content Include="Views\Pedido\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
