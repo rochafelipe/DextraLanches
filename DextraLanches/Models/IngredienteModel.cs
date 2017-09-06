@@ -8,5 +8,7 @@ namespace DextraLanches.Models
 {
     public class IngredienteModel : BaseModel
     {
+        public decimal Preco { get; set; }
+
     }
 }

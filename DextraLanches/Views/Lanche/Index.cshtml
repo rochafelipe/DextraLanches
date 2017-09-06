@@ -1,0 +1,88 @@
+﻿@model DextraLanches.Models.LancheViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<legend>Lanches</legend>
+
+
+@{
+
+    WebGrid Grid = new WebGrid(source: Model.ListaLanches, rowsPerPage: 8);
+}
+
+@using (@Html.BeginForm())
+{
+
+    <form>
+        <div class="col-lg-3">
+            <div class="form-group">
+                @Html.Label("Nome do Lanche")
+                @Html.TextBoxFor(m => m.NovoLanche.Nome, new { @placeholder = "Nome", @class = "form-control" })
+
+
+            </div>
+            <div class="form-group">
+
+                <label>Descrição do lanche </label><br />
+                @Html.TextBoxFor(m => m.NovoLanche.Descricao, new { @placeholder = "Descrição...", @maxlength = "300", @class = "form-control" })
+            </div>
+            </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+
+                <label>Ingrediente </label><br />
+                <img src="~/Images/adicionar.png" id="add-ingrediente" />
+                @Html.DropDownListFor(m => m.NovoLanche.IngredienteSelecionado, Model.IngredientesDisponiveis.Select(c => new SelectListItem { Text = c.Descricao, Value = c.ID.ToString() }))
+            </div>
+            <div id="lstIngredientes">
+                <table>
+                    <tr>
+                        <td>Sem ingredientes adicionados...</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <div class="form-group">
+
+                <button type="submit" class="btn">Adicionar</button>
+            </div>
+
+        </div>
+         
+
+           
+        
+
+
+    </form>
+
+}
+
+<div class="col-lg-12">
+    @if (Grid.Rows.Count > 0)
+    {
+        @Grid.GetHtml(
+             tableStyle: "table table-striped",
+
+            numericLinksCount: 7,
+            columns: Grid.Columns(
+            Grid.Column("ID", header: "ID", format: @<text>@item.ID</text>),
+                    Grid.Column("Nome", header: "Nome", format: @<text>@item.Nome</text>),
+                    Grid.Column("Descricao", header: "Descriçao", format: @<text>@item.Descricao</text>),
+             Grid.Column("Nome", header: "Nome", format: @<text>@item.Ingredientes</text>),
+        Grid.Column("Preco", header: "Preço", format: @<text>@item.Preco</text>),
+            Grid.Column("Visualizar", canSort: false, format: @<text><img id="@item.ID" class="visualizar-cardapio" title="Visualizar" src="~/Images/pesquisar.jpg" /></text>)
+                                                                                 )
+                                                                                 )
+
+    }
+    else
+    {
+        <p>Ops. Não há registros.</p>
+    }
+
+</div>

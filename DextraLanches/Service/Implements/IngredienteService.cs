@@ -1,4 +1,5 @@
-﻿using DextraLanches.Service.Abstraction;
+﻿using DextraLanches.Logic.Implements;
+using DextraLanches.Service.Abstraction;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,13 @@ namespace DextraLanches.Service.Implements
 {
     public class IngredienteService : IService
     {
+        private IngredienteLogic IngredienteLogic;
+
+        public IngredienteService()
+        {
+            this.IngredienteLogic = new IngredienteLogic();
+        }
+
         public Models.Abstraction.BaseModel Adicionar(Models.Abstraction.BaseModel model)
         {
             throw new NotImplementedException();
@@ -20,12 +28,12 @@ namespace DextraLanches.Service.Implements
 
         public List<Models.Abstraction.BaseModel> Buscar()
         {
-            throw new NotImplementedException();
+            return this.IngredienteLogic.Buscar();
         }
 
         public Models.Abstraction.BaseModel Buscar(long ID)
         {
-            throw new NotImplementedException();
+            return this.IngredienteLogic.Buscar(ID);
         }
 
         public bool Remover(long ID)

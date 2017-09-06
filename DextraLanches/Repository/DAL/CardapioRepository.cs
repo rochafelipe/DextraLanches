@@ -11,7 +11,9 @@ namespace DextraLanches.Repository.DAL
     {
         public CardapioRepository()
         {
-            if(Cardapios == null && Cardapios.Count <= 0)
+            Cardapios = HttpContext.Current.Session["CardapiosBD"] as List<BaseEntity>;
+            
+            if(Cardapios == null)
             {
                 this.Cardapios = new List<BaseEntity>();
             }
@@ -21,7 +23,17 @@ namespace DextraLanches.Repository.DAL
 
         public Entities.BaseEntity Adicionar(Entities.BaseEntity entity)
         {
+            if(entity.ID == 0)
+            {
+                entity.ID = 1;
+            }
+            else
+            {
+                entity.ID = this.Buscar().Max(m => m.ID)+1;
+            }
+
             this.Cardapios.Add(entity);
+            HttpContext.Current.Session["CardapiosBD"] = this.Cardapios;
             return entity;
         }
 

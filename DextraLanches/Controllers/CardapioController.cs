@@ -15,38 +15,68 @@ namespace DextraLanches.Controllers
         public CardapioController(){
             if (CardapioService == null)
                 CardapioService = new CardapioService();
+
+            this.LancheService = new LancheService();
+            this.IngredienteService = new IngredienteService();
         }
         //
         // GET: /Cardapio/
         private CardapioService CardapioService;
+        private LancheService LancheService;
+        private IngredienteService IngredienteService;
 
+        [HttpGet]
         public ActionResult Index()
         {
-            this.CardapioService.Adicionar(new CardapioModel() {
-             Nome = "A",
-             Descricao="AA",
-             ID = 1
-            });
 
-            this.CardapioService.Adicionar(new CardapioModel()
+            var viewModel = new CardapioViewModel();
+            viewModel.ListaCardapios =  CardapioService.Buscar().Cast<CardapioModel>().ToList();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Index(CardapioViewModel viewModel)
+        {
+            if(!ModelState.IsValid)
             {
-                Nome = "B",
-                Descricao = "BB",
-                ID = 2
-            });
-            
-            //model.Add(new CardapioModel()
-            //{
-            //    Nome = "Cardápio Dia",
-            //    Descricao = "Cardápio válido das 10 ás 16:00hs"
-            //});
-            //model.Add(new CardapioModel()
-            //{
-            //    Nome = "Cardápio Noite",
-            //    Descricao = "Cardápio válido das 18 ás 22:00hs"
-            //});
-            var model = CardapioService.Buscar().Cast<CardapioModel>().ToList();
-            return View(model);
+                return View();
+            }
+
+            this.CardapioService.Adicionar(viewModel.CardapioNovo);
+
+            TempData["tagMessage"] = "sucesso";
+            TempData["message"] = "Registro salvo com sucesso!";
+
+            viewModel.ListaCardapios = this.CardapioService.Buscar().Cast<CardapioModel>().ToList();
+
+            return View(viewModel);
+        }
+
+        public ActionResult CardapioCliente()
+        {
+
+            var viewModel = new LancheViewModel();
+
+            viewModel.ListaLanches = this.LancheService.Buscar().Cast<LancheModel>().ToList();
+            viewModel.IngredientesDisponiveis = this.IngredienteService.Buscar().Cast<IngredienteModel>().ToList();
+            return View(viewModel);
+        }
+
+        public JsonResult buscarIngrediente(string ID)
+        {
+            JsonResult resultado = new JsonResult();
+
+            resultado.Data = this.IngredienteService.Buscar(long.Parse(ID));
+            resultado.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return resultado;
+        }
+
+        public JsonResult finalizarPedido(string Pedido)
+        {
+            JsonResult resultado = new JsonResult();
+
+           
+            return resultado;
         }
 
     }

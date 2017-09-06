@@ -1,4 +1,4 @@
-﻿@model List<DextraLanches.Models.CardapioModel>
+﻿@model DextraLanches.Models.CardapioViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,14 +8,42 @@
 
 
 @{
-    
-    WebGrid Grid = new WebGrid(source: @Model, rowsPerPage: 8);
+   
+    WebGrid Grid = new WebGrid(source: Model.ListaCardapios, rowsPerPage: 8);
 }
 
+@using (@Html.BeginForm())
+    {
 
-        @if (Grid.Rows.Count > 0)
-        {
-            @Grid.GetHtml(
+<form>
+    <div class="col-lg-4">
+        <div class="form-group">
+            @Html.Label("Nome do cardápio")
+            @Html.TextBoxFor(m => m.CardapioNovo.Nome, new { @placeholder = "Nome", @class = "form-control" })
+
+
+        </div>
+        <div class="form-group">
+
+            <label>Descrição do cardápio </label><br />
+            @Html.TextBoxFor(m => m.CardapioNovo.Descricao, new { @placeholder = "Descrição...", @maxlength = "300", @class = "form-control" })
+        </div>
+        <div class="form-group">
+
+            <button type="submit" class="btn">Adicionar</button>
+        </div>
+    </div>
+       
+
+   
+</form>
+
+}
+
+<div class="col-lg-12">
+    @if (Grid.Rows.Count > 0)
+    {
+        @Grid.GetHtml(
              tableStyle: "table table-striped",
 
             numericLinksCount: 7,
@@ -24,18 +52,50 @@
                     Grid.Column("Nome", header: "Nome", format: @<text>@item.Nome</text>),
                     Grid.Column("Descricao", header: "Descriçao", format: @<text>@item.Descricao</text>),
              Grid.Column("Nome", header: "Nome", format: @<text>@item.Nome</text>),
-                    Grid.Column("Descricao", header: "Descriçao", format: @<text>@item.Descricao</text>)
+                    Grid.Column("Descricao", header: "Descriçao", format: @<text>@item.Descricao</text>),
+            Grid.Column("Visualizar", canSort: false, format: @<text><img id="@item.ID" class="visualizar-cardapio" title="Visualizar" src="~/Images/pesquisar.jpg" /></text>)
+                                                                                )
+                                                                                )
 
-                                                                                      )
-                                                                                      )
+    }
+    else
+    {
+        <p>Ops. Não há registros.</p>
+    }
 
-        }
-        else
-        {
-            <p>Ops. Não há registros.</p>
-        }
+</div>
 
-@section scripts{
-    @*<link rel="stylesheet" href="~/Content/Style.css">
-    <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css">*@
-}
+<div id="dialog-cardapio" title="Cardápio"></div>
+
+    @section scripts{
+        @*<link rel="stylesheet" href="~/Content/Style.css">
+            <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css">*@
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        dialog = $("#dialog-cardapio").dialog({
+            autoOpen: false,
+            resizable: true,
+            height: 600,
+            width: 550,
+            modal: true,
+            buttons: {
+                Cancelar: function () {
+                    dialog.dialog("close");
+                }
+            },
+            close: function () {
+
+            }
+        });
+    });
+
+    $(".visualizar-cardapio").button().on("click", function () {
+        
+        dialog.dialog("open");
+    });
+            </script>
+
+    }

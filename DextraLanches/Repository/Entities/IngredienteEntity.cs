@@ -7,5 +7,7 @@ namespace DextraLanches.Repository.Entities
 {
     public class IngredienteEntity : BaseEntity
     {
+        public decimal Preco { get; set; }
+
     }
 }

@@ -1,0 +1,172 @@
+﻿@model DextraLanches.Models.LancheViewModel
+@{
+    ViewBag.Title = "CardapioCliente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cardápio do Cliente</h2>
+<br />
+
+<input type="button" value="Montar meu lanche" id="montar-lanche" class="btn-danger" />
+<br /><br />
+@foreach (var item in Model.ListaLanches)
+{
+    <legend>@item.Nome</legend>
+    <div class="col-lg-12">
+        <div class="col-lg-3">
+
+            <figure class="figure">
+                <img src="~/Images/lanche1.jpg" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
+                <figcaption class="figure-caption">@item.Nome  @item.Preco</figcaption>
+            </figure>
+
+
+        </div>
+        <div class="col-lg-3">
+            <span>
+                @item.Descricao
+                <br />
+                <img src="~/Images/desconto.png" />
+            </span>
+        </div>
+    </div>
+    <legend></legend>
+}
+
+
+
+<div id="dialog-montar-lanche" title="Montar Lanche">
+
+    <legend>Meu Lanche</legend>
+
+    <div class="col-lg-3">
+        <div class="form-group">
+
+            <label>Ingrediente </label><br />
+            
+            @Html.DropDownListFor(m => m.NovoLanche.IngredienteSelecionado, Model.IngredientesDisponiveis.Select(c => new SelectListItem { Text = c.Descricao, Value = c.ID.ToString() }))
+            <img src="~/Images/adicionar.png" id="add-ingrediente" />
+        </div>
+        <table id="tblIngredientes" class="table">
+            <thead>
+                <tr>
+                    <th>Ingrediente</th>
+                    <th>Preço</th>
+                    <th>Remover</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div class="col-lg-2">
+            
+            <label>Total:</label>
+            <input type="text" id="total" readonly />
+            <input type="hidden" id="Pedido" />
+        </div>
+
+        <br />
+        <br />
+        <br />
+        Limpar a lista:<img src="~/Images/editar.png" id="limparLista" />
+    </div>
+
+    <div class="col-lg-12">
+        <br /><br /><br />
+        <input type="button" class="btn-success" value="Finalizar Pedido" id="finalizar-pedido" />
+
+    </div>
+
+</div>
+
+
+
+@section scripts{
+    @*<link rel="stylesheet" href="~/Content/Style.css">
+        <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css">*@
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            dialog = $("#dialog-montar-lanche").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: 600,
+                width: 550,
+                modal: true,
+                buttons: {
+                    Cancelar: function () {
+                        dialog.dialog("close");
+                    }
+                },
+                close: function () {
+
+                }
+            });
+        });
+
+        $("#montar-lanche").button().on("click", function () {
+
+            dialog.dialog("open");
+        });
+
+        $("#add-ingrediente").on("click", function () {
+            base_url = window.location.host;
+            url = "/Cardapio/buscarIngrediente";
+            full_url = base_url + url;
+            $.ajaxSetup({ cache: false });
+            $.ajax({
+                url: url,
+                data: { "ID": $("#NovoLanche_IngredienteSelecionado").val() },
+                success: function (data) {
+
+                    var tbl = $("#tblIngredientes");
+                    var totalPrice = parseFloat($("#total").val()) || 0;
+
+                    tbl.append("<tr><td>" + data["Nome"] + "</td> <td>" + data["Preco"] + "</td>  </tr>");
+                    totalPrice += parseFloat(data["Preco"]);
+
+                    $("#total").val(totalPrice);
+                    $("#Pedido").val($("#Pedido").val() +"|"+ data["Nome"])
+                },
+                error: function () {
+                    $(".GifAjaxLoaderEntrega").hide();
+                    alert("Problema ao buscar produto.");
+                }
+            });
+
+
+        });
+
+        $("#limparLista").on("click", function () {
+            var tbl = $("#tblIngredientes");
+
+            tbl.remove();
+            $("#total").val(0);
+
+        });
+
+        $("#finalizar-pedido").on("click", function () {
+            base_url = window.location.host;
+            url = "/Cardapio/finalizarPedido";
+            full_url = base_url + url;
+            $.ajaxSetup({ cache: false });
+            $.ajax({
+                url: url,
+                data: { "Pedido": $("#Pedido").val() },
+                success: function (data) {
+
+                    var tbl = $("#tblIngredientes");
+                  
+                },
+                error: function () {
+                    $(".GifAjaxLoaderEntrega").hide();
+                    alert("Problema ao buscar produto.");
+                }
+            });
+
+
+        });
+
+    </script>
+}
