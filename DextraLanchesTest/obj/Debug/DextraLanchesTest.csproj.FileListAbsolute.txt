@@ -1,0 +1,12 @@
+C:\Users\lipdi\Documents\Visual Studio 2013\Projects\DextraLanches\DextraLanchesTest\bin\Debug\DextraLanchesTest.dll
+C:\Users\lipdi\Documents\Visual Studio 2013\Projects\DextraLanches\DextraLanchesTest\bin\Debug\DextraLanchesTest.pdb
+C:\Users\lipdi\Documents\Visual Studio 2013\Projects\DextraLanches\DextraLanchesTest\obj\Debug\DextraLanchesTest.csprojResolveAssemblyReference.cache
+C:\Users\lipdi\Documents\Visual Studio 2013\Projects\DextraLanches\DextraLanchesTest\obj\Debug\DextraLanchesTest.dll
+C:\Users\lipdi\Documents\Visual Studio 2013\Projects\DextraLanches\DextraLanchesTest\obj\Debug\DextraLanchesTest.pdb
+C:\Users\lipdi\Documents\Visual Studio 2013\Projects\DextraLanches\DextraLanchesTest\bin\Debug\DextraLanches.dll
+C:\Users\lipdi\Documents\Visual Studio 2013\Projects\DextraLanches\DextraLanchesTest\bin\Debug\System.Web.Mvc.dll
+C:\Users\lipdi\Documents\Visual Studio 2013\Projects\DextraLanches\DextraLanchesTest\bin\Debug\System.Web.Optimization.dll
+C:\Users\lipdi\Documents\Visual Studio 2013\Projects\DextraLanches\DextraLanchesTest\bin\Debug\Newtonsoft.Json.dll
+C:\Users\lipdi\Documents\Visual Studio 2013\Projects\DextraLanches\DextraLanchesTest\bin\Debug\DextraLanches.pdb
+C:\Users\lipdi\Documents\Visual Studio 2013\Projects\DextraLanches\DextraLanchesTest\bin\Debug\System.Web.Mvc.xml
+C:\Users\lipdi\Documents\Visual Studio 2013\Projects\DextraLanches\DextraLanchesTest\bin\Debug\System.Web.Optimization.xml

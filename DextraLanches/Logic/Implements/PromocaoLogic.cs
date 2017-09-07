@@ -50,60 +50,108 @@ namespace DextraLanches.Logic.Implements
         {
             if(LancheModel.ListaIngredientes.Count > 0)
             {
-               // LancheModel.Promocoes.Add( ConverteEntityToModel( this.PromocaoLight(LancheModel.ListaIngredientes)));
+                this.PromocaoLight(LancheModel);
+                this.PromocaoMuitaCarne(LancheModel);
+                this.PromocaoMuitoQueijo(LancheModel);
+            }
+
+            if (LancheModel.Promocoes.Count > 0)
+            {
+                var promo = LancheModel.Promocoes.Max(p => p.ID);
+                LancheModel.ContemPromocao = true;
+
+                switch (promo)
+                {
+                    case 1:
+                        LancheModel.PrecoPromocional = this.CalcularDescontoLight(LancheModel);
+                        LancheModel.PromocaoUtilizada = LancheModel.Promocoes.Where(p => p.ID == 1).First();
+                        break;
+                    case 2:
+                        LancheModel.PrecoPromocional = this.CalcularDescontoMuitaCarne(LancheModel);
+                        LancheModel.PromocaoUtilizada = LancheModel.Promocoes.Where(p => p.ID == 2).First();
+
+                        break;
+                    case 3:
+                        LancheModel.PrecoPromocional = this.CalcularDescontoMuitoQueijo(LancheModel);
+                        LancheModel.PromocaoUtilizada = LancheModel.Promocoes.Where(p => p.ID == 3).First();
+                        break;
+                }
+
             }
 
             return LancheModel;
         }
 
-        public PromocaoEntity PromocaoLight(List<IngredienteModel> Ingredientes )
+        public void PromocaoLight(LancheModel lanche )
         {
 
             var alfaceModel = this.IngredienteLogic.Buscar(1);
-            var baconMoel = this.IngredienteLogic.Buscar(2);
-            if (Ingredientes.Contains(alfaceModel) && !Ingredientes.Contains(baconMoel))
+            var baconModel = this.IngredienteLogic.Buscar(2);
+            if (lanche.ListaIngredientes.Any(i => i.ID == alfaceModel.ID) && !lanche.ListaIngredientes.Any(i => i.ID == baconModel.ID))
             {
-                return (PromocaoEntity)this.PromocaoRepository.Buscar(1);
-            }
+                lanche.Promocoes.Add((PromocaoModel)ConverteEntityToModel(this.PromocaoRepository.Buscar(1)));
+            } 
             else
             {
-                return null;
+                //return null;
             }
         }
 
-        public PromocaoEntity PromocaoMuitaCarne(List<IngredienteModel> Ingredientes)
+        public void PromocaoMuitaCarne(LancheModel lanche)
         {
             var carneModel = this.IngredienteLogic.Buscar(3);
 
-            var QuantidadeCarne = Ingredientes.Where(i => i.ID == carneModel.ID).Count();
+            var QuantidadeCarne = lanche.ListaIngredientes.Where(i => i.ID == carneModel.ID).Count();
 
             if (QuantidadeCarne >= 3)
             {
-                return (PromocaoEntity)this.PromocaoRepository.Buscar(2);
+                lanche.Promocoes.Add((PromocaoModel)ConverteEntityToModel( this.PromocaoRepository.Buscar(2)));
             }
             else
             {
-                return null;
+                //return null;
             }
         }
 
-        public PromocaoEntity PromocaoMuitoQueijo(List<IngredienteModel> Ingredientes)
+        public void PromocaoMuitoQueijo(LancheModel lanche)
         {
 
             var queijoModel = this.IngredienteLogic.Buscar(5);
 
-            var QuantidadeQueijo = Ingredientes.Where(i => i.ID == queijoModel.ID).Count();
+            var QuantidadeCarne = lanche.ListaIngredientes.Where(i => i.ID == queijoModel.ID).Count();
 
-            if (QuantidadeQueijo >= 3)
+            if (QuantidadeCarne >= 3)
             {
-                return (PromocaoEntity)this.PromocaoRepository.Buscar(3);
+                lanche.Promocoes.Add((PromocaoModel)ConverteEntityToModel(this.PromocaoRepository.Buscar(3)));
             }
             else
             {
-                return null;
+                //return null;
             }
         }
 
+        public decimal CalcularDescontoLight(LancheModel lanche)
+        {
+            return lanche.Preco - ((10 * lanche.Preco) / 100);
+        }
+
+        public decimal CalcularDescontoMuitaCarne(LancheModel lanche)
+        {
+            var fatorDesconto = Math.Floor((double)lanche.ListaIngredientes.Where(i => i.ID == 3).Count() / 3);
+
+            var precoCarne = ((IngredienteModel)this.IngredienteLogic.Buscar(3)).Preco;
+
+            return lanche.Preco - ((decimal)fatorDesconto * precoCarne);
+        }
+
+        public decimal CalcularDescontoMuitoQueijo(LancheModel lanche)
+        {
+            var fatorDesconto = Math.Floor((double)lanche.ListaIngredientes.Where(i => i.ID == 3).Count() / 3);
+
+            var precoQueijo = ((IngredienteModel)this.IngredienteLogic.Buscar(5)).Preco;
+
+            return lanche.Preco - ((decimal)fatorDesconto * precoQueijo);
+        }
 
         public bool Remover(long ID)
         {

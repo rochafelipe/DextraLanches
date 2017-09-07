@@ -26,10 +26,16 @@
             <span>
                 @item.Descricao
                 <br />
-                <img src="~/Images/desconto.png" />
+                @if (item.ContemPromocao)
+                {
+                    <img src="~/Images/desconto.png" />
+                    <span>@item.PromocaoUtilizada.Descricao</span>
+                }
+
             </span>
-            <div class="bottom"><input type="button" class="btn-success btnComprar" value="Comprar" /></div>
-            
+            <input type="button" class="btn-success" value="Comprar" onclick="location.href='@Url.Action("Comprar", "Cardapio", new { id = item.ID })'" />
+
+
         </div>
     </div>
     <legend></legend>
@@ -45,7 +51,7 @@
         <div class="form-group">
 
             <label>Ingrediente </label><br />
-            
+
             @Html.DropDownListFor(m => m.NovoLanche.IngredienteSelecionado, Model.IngredientesDisponiveis.Select(c => new SelectListItem { Text = c.Descricao, Value = c.ID.ToString() }))
             <img src="~/Images/adicionar.png" id="add-ingrediente" />
         </div>
@@ -60,7 +66,7 @@
             <tbody></tbody>
         </table>
         <div class="col-lg-2">
-            
+
             <label>Total:</label>
             <input type="text" id="total" readonly />
             <input type="hidden" id="Pedido" />
@@ -83,8 +89,11 @@
 
 
 @section scripts{
-    @*<link rel="stylesheet" href="~/Content/Style.css">
-        <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css">*@
+ 
+
+
+@*<script src="~/Scripts/alertify.min.js"></script>*@
+
 
     <script type="text/javascript">
 
@@ -131,7 +140,7 @@
                     $("#total").val(totalPrice);
                     $("#Pedido").val($("#Pedido").val() + "|" + data["ID"]);
 
-                   
+
 
                 },
                 error: function () {
@@ -152,23 +161,29 @@
         });
 
         $("#finalizar-pedido").on("click", function () {
-            base_url = window.location.host;
-            url = "/Cardapio/finalizarPedido";
-            full_url = base_url + url;
-            $.ajaxSetup({ cache: false });
-            $.ajax({
-                url: url,
-                data: { "Pedido": $("#Pedido").val() },
-                success: function (data) {
 
-                    var tbl = $("#tblIngredientes");
-                    document.location.href = "../Pedido/Index";
-                },
-                error: function () {
-                    $(".GifAjaxLoaderEntrega").hide();
-                    alert("Problema ao buscar produto.");
-                }
-            });
+            if(1 ==0){
+                base_url = window.location.host;
+                url = "/Cardapio/finalizarPedido";
+                full_url = base_url + url;
+                $.ajaxSetup({ cache: false });
+                $.ajax({
+                    url: url,
+                    data: { "Pedido": $("#Pedido").val() },
+                    success: function (data) {
+
+                        var tbl = $("#tblIngredientes");
+                        document.location.href = "../Pedido/Index";
+                    },
+                    error: function () {
+                        $(".GifAjaxLoaderEntrega").hide();
+                        alert("Problema ao buscar produto.");
+                    }
+                });
+            }else{
+                alertify.error("Por favor, adicione ingredientes.");
+            }
+          
 
 
         });

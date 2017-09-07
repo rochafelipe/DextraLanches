@@ -42,12 +42,16 @@ namespace DextraLanches.Logic.Implements
 
         public bool Remover(long ID)
         {
-            throw new NotImplementedException();
+           return  this.PedidoRepository.Remover(ID);
         }
 
         public BaseEntity ConvertModelToBase(BaseModel m)
         {
             PedidoEntity e = new PedidoEntity();
+
+            e.ID = m.ID;
+            e.Descricao = m.Descricao;
+            e.Nome = m.Nome;
 
             foreach(var lanche in ((PedidoModel)m).Lanches)
             {
@@ -60,6 +64,10 @@ namespace DextraLanches.Logic.Implements
         public BaseModel ConvertEntityToModel(BaseEntity e)
         {
             PedidoModel m = new PedidoModel();
+
+            m.ID = e.ID;
+            m.Descricao = e.Descricao;
+            m.Nome = e.Nome;
 
             foreach (var lanche in ((PedidoEntity)e).Lanches)
             {

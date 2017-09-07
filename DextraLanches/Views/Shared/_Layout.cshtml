@@ -5,6 +5,8 @@
     @System.Web.Optimization.Scripts.Render("~/Scripts/jquery-1.12.4.js")
     @System.Web.Optimization.Scripts.Render("~/Scripts/bootstrap.js")
     @System.Web.Optimization.Styles.Render("~/Content/bootstrap.css")
+   
+
     <!--Script js do Bootstrap  - Colar após o carregamento do Jquery-->
     <meta charset="utf-8" />
 
@@ -103,5 +105,10 @@
     </div>
 </body>
 </html>
+
+        @*<script src="~/Scripts/alertify.min.js"></script>*@
+@*<script src="~/Scripts/jquery-1.10.2.min.js" type="text/javascript" charset="utf-8"></script>*@
+
 @RenderSection("scripts", required: false)
 @Html.Partial("_Message")
+

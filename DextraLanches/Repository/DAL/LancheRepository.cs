@@ -60,7 +60,8 @@ namespace DextraLanches.Repository.DAL
                     Nome = "X-Egg",
                     Descricao ="X-Egg",
                     ID = 3,
-                    Ingredientes = this.IngredienteRepository.BuscarPorLanche(3).Cast<IngredienteEntity>().ToList()
+                    Ingredientes = this.IngredienteRepository.BuscarPorLanche(3).Cast<IngredienteEntity>().ToList(),
+                    
                 });
 
                  Lanches.Add(new LancheEntity()
@@ -77,7 +78,10 @@ namespace DextraLanches.Repository.DAL
 
         public Entities.BaseEntity Buscar(long ID)
         {
-            if (Lanches.Count > 0)
+            if (Lanches.Count <= 0)
+                this.Buscar();
+
+          
                 return Lanches.Where(l => l.ID == ID).FirstOrDefault();
 
             return null;

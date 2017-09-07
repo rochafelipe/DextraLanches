@@ -65,6 +65,19 @@ namespace DextraLanches.Controllers
             return View(viewModel);
         }
 
+        public ActionResult Comprar(long id)
+        {
+            var lanche = this.LancheService.Buscar(id);
+            var pedido = new PedidoModel();
+            pedido.Lanches.Add((LancheModel)lanche);
+            this.PedidoService.Adicionar(pedido);
+
+            TempData["tagMessage"] = "sucesso";
+            TempData["message"] = "Pedido salvo, continue comprando ou Confirme seu pedido!";
+
+            return RedirectToAction("Index", "Pedido");
+        }
+
         public JsonResult buscarIngrediente(string ID)
         {
             JsonResult resultado = new JsonResult();
@@ -95,6 +108,8 @@ namespace DextraLanches.Controllers
 
             pedido.Lanches.Add(lancheMontado);
 
+            TempData["tagMessage"] = "sucesso";
+            TempData["message"] = "Pedido salvo, continue comprando ou Confirme seu pedido!";
             this.PedidoService.Adicionar(pedido);
 
             resultado.Data = "Sucesso";

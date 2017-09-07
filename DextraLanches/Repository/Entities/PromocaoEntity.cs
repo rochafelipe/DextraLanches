@@ -8,6 +8,8 @@ namespace DextraLanches.Repository.Entities
     public class PromocaoEntity : BaseEntity
     {
 
+    
+
         public string RegraNegocio { get; set; }
     }
 }

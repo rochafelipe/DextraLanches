@@ -35,7 +35,7 @@ namespace DextraLanches.Service.Implements
 
         public Models.Abstraction.BaseModel Buscar(long ID)
         {
-            throw new NotImplementedException();
+           return this.LancheLogic.Buscar(ID);
         }
 
         public bool Remover(long ID)

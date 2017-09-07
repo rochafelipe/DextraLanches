@@ -14,10 +14,12 @@ namespace DextraLanches.Logic.Implements
     {
         private LancheRepository LancheRepository;
         private IngredienteLogic IngredienteLogic;
+        private PromocaoLogic PromocaoLogic;
         public LancheLogic()
         {
             this.IngredienteLogic = new IngredienteLogic();
             this.LancheRepository = new LancheRepository();
+            this.PromocaoLogic = new PromocaoLogic();
         }
 
         public Models.Abstraction.BaseModel Adicionar(Models.Abstraction.BaseModel model)
@@ -32,7 +34,14 @@ namespace DextraLanches.Logic.Implements
 
         public List<Models.Abstraction.BaseModel> Buscar()
         {
-            return this.LancheRepository.Buscar().Select(ConvertEntityToModel).ToList();
+            var ListaLanches = new List<BaseModel>();
+
+            foreach(var lanche in this.LancheRepository.Buscar().Select(ConvertEntityToModel).Cast<LancheModel>())
+            {
+                ListaLanches.Add((LancheModel)this.PromocaoLogic.BuscarPorLanche(lanche));
+            }
+
+            return ListaLanches;
         }
 
         public Models.Abstraction.BaseModel Buscar(long ID)
@@ -66,6 +75,10 @@ namespace DextraLanches.Logic.Implements
             LancheMontado.Descricao = "Lanche montado pelo cliente.";
             LancheMontado.ListaIngredientes = ListaIngredientes;
 
+            LancheMontado = (LancheModel)this.PromocaoLogic.BuscarPorLanche(LancheMontado);
+
+            
+
             return LancheMontado;
 
         }
@@ -77,6 +90,9 @@ namespace DextraLanches.Logic.Implements
             e.Nome = m.Nome;
             e.Descricao = m.Descricao;
             e.ID = m.ID;
+            e.PrecoPromocional = ((LancheModel)m).PrecoPromocional;
+            e.PromocaoUtilizada = (PromocaoEntity)this.PromocaoLogic.ConvertModelToEntity(((LancheModel)m).PromocaoUtilizada);
+            e.ContemPromocao = ((LancheModel)m).ContemPromocao;
 
             foreach(var ingrediente in ((LancheModel)m).ListaIngredientes)
             {
@@ -93,7 +109,9 @@ namespace DextraLanches.Logic.Implements
             m.Nome = e.Nome;
             m.Descricao = e.Descricao;
             m.ID = e.ID;
-            
+            m.ContemPromocao = ((LancheEntity)e).ContemPromocao;
+            m.PrecoPromocional = ((LancheEntity)e).PrecoPromocional;
+            m.PromocaoUtilizada = ((LancheEntity)e).PromocaoUtilizada != null ? (PromocaoModel)this.PromocaoLogic.ConverteEntityToModel(((LancheEntity)e).PromocaoUtilizada) : m.PromocaoUtilizada;
             foreach (var ingrediente in ((LancheEntity)e).Ingredientes)
             {
                 m.ListaIngredientes.Add((IngredienteModel)IngredienteLogic.ConvertEntityToModel(ingrediente));

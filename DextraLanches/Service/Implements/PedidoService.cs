@@ -38,7 +38,7 @@ namespace DextraLanches.Service.Implements
 
         public bool Remover(long ID)
         {
-            throw new NotImplementedException();
+            return this.PedidoLogic.Remover(ID);
         }
     }
 }

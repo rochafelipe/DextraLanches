@@ -12,7 +12,7 @@ namespace DextraLanches.Repository.DAL
 
         public PromocaoRepository()
         {
-            this.Promocoes = HttpContext.Current.Session["PedidosBD"] as List<BaseEntity>;
+            this.Promocoes = HttpContext.Current.Session["PromocoesBD"] as List<BaseEntity>;
 
             if (this.Promocoes == null)
                 this.Promocoes = new List<BaseEntity>();
@@ -23,7 +23,7 @@ namespace DextraLanches.Repository.DAL
         public Entities.BaseEntity Adicionar(Entities.BaseEntity entity)
         {
             this.Promocoes.Add(entity);
-            HttpContext.Current.Session["PedidosBD"] = this.Promocoes;
+            HttpContext.Current.Session["PromocoesBD"] = this.Promocoes;
 
             return entity;
         }
@@ -61,7 +61,6 @@ namespace DextraLanches.Repository.DAL
                     RegraNegocio = "A cada 3 porções de queijo o cliente só paga 2. Se o lanche tiver 6 porções, ocliente pagará 4. Assim por diante...",
                     ID = 3
                 });
-
                 //this.Promocoes.Add(new PromocaoEntity()
                 //{
                 //    Nome = "Inflação",
@@ -76,6 +75,9 @@ namespace DextraLanches.Repository.DAL
 
         public Entities.BaseEntity Buscar(long ID)
         {
+            if (this.Promocoes.Count <= 0)
+                this.Buscar();
+
             return this.Promocoes.Where(p => p.ID == ID).FirstOrDefault();
         }
 

@@ -31,5 +31,15 @@ namespace DextraLanches.Controllers
             return View(viewModel);
         }
 
+        public ActionResult RemoverItem(long id)
+        {
+
+            this.PedidoService.Remover(id);
+            TempData["tagMessage"] = "sucesso";
+            TempData["message"] = "Registro salvo com sucesso!";
+            return RedirectToAction("Index");
+
+        }
+
     }
 }

@@ -18,19 +18,26 @@
 
                     <figure class="figure">
                         <img src="~/Images/lanche1.jpg" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
-                        <figcaption class="figure-caption">@lanche.Nome  @lanche.Preco</figcaption>
+                        <figcaption class="figure-caption"><label>Preco original: </label>  @lanche.Preco <br />@if (lanche.ContemPromocao){<label>Preco promocional: </label> <span class="alert-danger">@lanche.PrecoPromocional</span>}</figcaption>
                     </figure>
 
 
                 </div>
                 <div class="col-lg-3">
                     <span>
-                        @lanche.Descricao
+                        @lanche.Descricao<br />
+                        @lanche.Ingredientes
                         <br />
-                        <img src="~/Images/desconto.png" />
+                        @if (lanche.ContemPromocao)
+                        {
+                            <img src="~/Images/desconto.png" />
+                            <br />
+                            @lanche.PromocaoUtilizada.Descricao
+                        }
                     </span>
                 </div>
             </div>
+    <div class="text-right">@Html.ActionLink("Remover Item","RemoverItem", new {id = pedido.ID})</div>
             <legend></legend>
         }
     }

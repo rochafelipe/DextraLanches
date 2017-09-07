@@ -22,6 +22,15 @@ namespace DextraLanches.Repository.DAL
 
         public Entities.BaseEntity Adicionar(Entities.BaseEntity entity)
         {
+            if (Pedidos.Count > 0)
+            {
+                entity.ID = Pedidos.Max(p => p.ID) + 1;
+            }
+            else
+            {
+                entity.ID = 1;
+            }
+                
             Pedidos.Add(entity);
 
             HttpContext.Current.Session["PedidosBD"] = Pedidos;
@@ -41,12 +50,12 @@ namespace DextraLanches.Repository.DAL
 
         public Entities.BaseEntity Buscar(long ID)
         {
-            throw new NotImplementedException();
+            return Pedidos.First(f => f.ID == ID);
         }
 
         public bool Remover(long ID)
         {
-            throw new NotImplementedException();
+            return Pedidos.Remove(this.Buscar(ID));
         }
     }
 }

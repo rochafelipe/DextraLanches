@@ -11,6 +11,8 @@ namespace DextraLanches.Models
         public LancheModel()
         {
             this.ListaIngredientes = new List<IngredienteModel>();
+            this.Promocoes = new List<PromocaoModel>();
+            this.PromocaoUtilizada = new PromocaoModel();
         }
 
         public List<IngredienteModel> ListaIngredientes { get; set; }
@@ -18,14 +20,21 @@ namespace DextraLanches.Models
 
         public long IngredienteSelecionado { get; set; }
 
+       
+        public decimal PrecoPromocional{get;set;}
+
         public decimal Preco
         {
             get
             {
-                return ListaIngredientes.Sum(i => i.Preco);
+                return this.ListaIngredientes.Sum(i => i.Preco);
             }
         }
 
         public List<PromocaoModel> Promocoes { get; set; }
+
+        public PromocaoModel PromocaoUtilizada { get; set; }
+
+        public bool ContemPromocao { get; set; }
     }
 }

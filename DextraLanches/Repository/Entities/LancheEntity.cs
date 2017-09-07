@@ -10,16 +10,22 @@ namespace DextraLanches.Repository.Entities
         public LancheEntity()
         {
             this.Ingredientes = new List<IngredienteEntity>();
+            this.PromocaoUtilizada = new PromocaoEntity();
         }
         public List<IngredienteEntity> Ingredientes { get; set; }
+
+        public decimal PrecoPromocional{get;set;}
 
         public decimal Preco
         {
             get
             {
-                return Ingredientes.Sum(i => i.Preco);
+                return this.Ingredientes.Sum(i => i.Preco);
             }
-
         }
+
+        public PromocaoEntity PromocaoUtilizada { get; set; }
+
+        public bool ContemPromocao { get; set; }
     }
 }
