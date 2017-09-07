@@ -146,12 +146,39 @@ namespace DextraLanches.Logic.Implements
 
         public decimal CalcularDescontoMuitoQueijo(LancheModel lanche)
         {
-            var fatorDesconto = Math.Floor((double)lanche.ListaIngredientes.Where(i => i.ID == 3).Count() / 3);
+            var fatorDesconto = Math.Floor((double)lanche.ListaIngredientes.Where(i => i.ID == 5).Count() / 3);
 
             var precoQueijo = ((IngredienteModel)this.IngredienteLogic.Buscar(5)).Preco;
 
             return lanche.Preco - ((decimal)fatorDesconto * precoQueijo);
         }
+
+        #region métodos para chamada no projeto de test
+        
+        public decimal TCalcularDescontoLight(LancheModel lanche)
+        {
+            return lanche.Preco - ((10 * lanche.Preco) / 100);
+        }
+
+        public decimal TCalcularDescontoMuitaCarne(LancheModel lanche, decimal valor)
+        {
+            var fatorDesconto = Math.Floor((double)lanche.ListaIngredientes.Where(i => i.ID == 3).Count() / 3);
+
+            var precoCarne = valor;
+
+            return lanche.Preco - ((decimal)fatorDesconto * precoCarne);
+        }
+
+        public decimal TCalcularDescontoMuitoQueijo(LancheModel lanche, decimal valor)
+        {
+            var fatorDesconto = Math.Floor((double)lanche.ListaIngredientes.Where(i => i.ID == 5).Count() / 3);
+
+            var precoQueijo = valor;
+
+            return lanche.Preco - ((decimal)fatorDesconto * precoQueijo);
+        }
+
+        #endregion 
 
         public bool Remover(long ID)
         {

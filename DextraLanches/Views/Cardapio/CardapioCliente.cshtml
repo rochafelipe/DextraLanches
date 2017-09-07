@@ -54,17 +54,20 @@
 
             @Html.DropDownListFor(m => m.NovoLanche.IngredienteSelecionado, Model.IngredientesDisponiveis.Select(c => new SelectListItem { Text = c.Descricao, Value = c.ID.ToString() }))
             <img src="~/Images/adicionar.png" id="add-ingrediente" />
+           
         </div>
         <table id="tblIngredientes" class="table">
             <thead>
                 <tr>
                     <th>Ingrediente</th>
                     <th>Preço</th>
-                    <th>Remover</th>
                 </tr>
             </thead>
             <tbody></tbody>
+
         </table>
+        @*<div class="col-lg-12"><label>Limpar a lista:</label>
+<img src="~/Images/editar.png" id="limparLista" /></div>*@
         <div class="col-lg-2">
 
             <label>Total:</label>
@@ -75,7 +78,6 @@
         <br />
         <br />
         <br />
-        Limpar a lista:<img src="~/Images/editar.png" id="limparLista" />
     </div>
 
     <div class="col-lg-12">
@@ -134,13 +136,15 @@
                     var tbl = $("#tblIngredientes");
                     var totalPrice = parseFloat($("#total").val()) || 0;
 
-                    tbl.append("<tr><td>" + data["Nome"] + "</td> <td>" + data["Preco"] + "</td>  </tr>");
+                    tbl.append("<tr><td>" + data["Nome"] + "</td> <td>" + parseFloat(data["Preco"] ).toFixed(2)+ "</td>  </tr>");
                     totalPrice += parseFloat(data["Preco"]);
 
-                    $("#total").val(totalPrice);
+                    $("#total").val(totalPrice.toFixed(2));
+                                               
                     $("#Pedido").val($("#Pedido").val() + "|" + data["ID"]);
 
 
+                    alertify.success("Ingrediente adicionado.");
 
                 },
                 error: function () {
@@ -162,7 +166,7 @@
 
         $("#finalizar-pedido").on("click", function () {
 
-            if(1 ==0){
+            if( $("#total").val() > 0 ){
                 base_url = window.location.host;
                 url = "/Cardapio/finalizarPedido";
                 full_url = base_url + url;
