@@ -66,14 +66,14 @@ namespace DextraLanches.Logic.Implements
                         LancheModel.PrecoPromocional = this.CalcularDescontoLight(LancheModel);
                         LancheModel.PromocaoUtilizada = LancheModel.Promocoes.Where(p => p.ID == 1).First();
                         break;
-                    case 2:
+                    case 3:
                         LancheModel.PrecoPromocional = this.CalcularDescontoMuitaCarne(LancheModel);
-                        LancheModel.PromocaoUtilizada = LancheModel.Promocoes.Where(p => p.ID == 2).First();
+                        LancheModel.PromocaoUtilizada = LancheModel.Promocoes.Where(p => p.ID == 3).First();
 
                         break;
-                    case 3:
+                    case 2:
                         LancheModel.PrecoPromocional = this.CalcularDescontoMuitoQueijo(LancheModel);
-                        LancheModel.PromocaoUtilizada = LancheModel.Promocoes.Where(p => p.ID == 3).First();
+                        LancheModel.PromocaoUtilizada = LancheModel.Promocoes.Where(p => p.ID == 2).First();
                         break;
                 }
 
@@ -105,7 +105,7 @@ namespace DextraLanches.Logic.Implements
 
             if (QuantidadeCarne >= 3)
             {
-                lanche.Promocoes.Add((PromocaoModel)ConverteEntityToModel( this.PromocaoRepository.Buscar(2)));
+                lanche.Promocoes.Add((PromocaoModel)ConverteEntityToModel( this.PromocaoRepository.Buscar(3)));
             }
             else
             {
@@ -122,7 +122,7 @@ namespace DextraLanches.Logic.Implements
 
             if (QuantidadeCarne >= 3)
             {
-                lanche.Promocoes.Add((PromocaoModel)ConverteEntityToModel(this.PromocaoRepository.Buscar(3)));
+                lanche.Promocoes.Add((PromocaoModel)ConverteEntityToModel(this.PromocaoRepository.Buscar(2)));
             }
             else
             {

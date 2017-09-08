@@ -38,8 +38,8 @@ namespace DextraLanchesTest
             //Hamburguer 3
             //ovo 4
             //Queijo 5
-            var expected = 9;
-            
+            var expected = 6;
+            var valorCarne = 3;
             PromocaoLogic PromocaoLogic = new PromocaoLogic();
             IngredienteLogic IngredienteLogic = new DextraLanches.Logic.Implements.IngredienteLogic();
             LancheModel model = new LancheModel();
@@ -70,7 +70,7 @@ namespace DextraLanchesTest
       
             model = (LancheModel)PromocaoLogic.BuscarPorLanche(model);
 
-            var result = PromocaoLogic.CalcularDescontoMuitaCarne((LancheModel)model);
+            var result = PromocaoLogic.TCalcularDescontoMuitaCarne((LancheModel)model, valorCarne);
             
 
 

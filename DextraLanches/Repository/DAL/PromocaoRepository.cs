@@ -68,6 +68,8 @@ namespace DextraLanches.Repository.DAL
                 //    RegraNegocio = "Os valores dos ingredientes são alterados com frequência e não gastaríamos que isso influenciasse nos testes automatizados.",
                 //    ID = 1
                 //});
+                HttpContext.Current.Session["PromocoesBD"] = this.Promocoes;
+                
             }
 
             return Promocoes;
