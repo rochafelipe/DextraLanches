@@ -29,7 +29,7 @@
                 <label>Descrição do lanche </label><br />
                 @Html.TextBoxFor(m => m.NovoLanche.Descricao, new { @placeholder = "Descrição...", @maxlength = "300", @class = "form-control" })
             </div>
-            </div>
+        </div>
         <div class="col-lg-3">
             <div class="form-group">
 
@@ -38,11 +38,24 @@
                 @Html.DropDownListFor(m => m.NovoLanche.IngredienteSelecionado, Model.IngredientesDisponiveis.Select(c => new SelectListItem { Text = c.Descricao, Value = c.ID.ToString() }))
             </div>
             <div id="lstIngredientes">
-                <table>
-                    <tr>
-                        <td>Sem ingredientes adicionados...</td>
-                    </tr>
+                <table id="tblIngredientes" class="table">
+                    <thead>
+                        <tr>
+                            <th>Ingrediente</th>
+                            <th>Preço</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+
                 </table>
+                @*<div class="col-lg-12"><label>Limpar a lista:</label>
+        <img src="~/Images/editar.png" id="limparLista" /></div>*@
+                <div class="col-lg-2">
+
+                    <label>Total:</label>
+                    <input type="text" id="total" readonly />
+                    @Html.HiddenFor(m => m.NovoLanche.Pedido)
+                </div>
             </div>
         </div>
         <div class="col-lg-9">
@@ -52,10 +65,10 @@
             </div>
 
         </div>
-         
 
-           
-        
+
+
+
 
 
     </form>
@@ -76,8 +89,8 @@
              Grid.Column("Nome", header: "Nome", format: @<text>@item.Ingredientes</text>),
         Grid.Column("Preco", header: "Preço", format: @<text>@item.Preco</text>),
             Grid.Column("Visualizar", canSort: false, format: @<text><img id="@item.ID" class="visualizar-cardapio" title="Visualizar" src="~/Images/pesquisar.jpg" /></text>)
-                                                                                 )
-                                                                                 )
+                                                                                  )
+                                                                                  )
 
     }
     else
@@ -86,3 +99,80 @@
     }
 
 </div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#add-ingrediente").on("click", function () {
+            base_url = window.location.host;
+            url = "/Cardapio/buscarIngrediente";
+            full_url = base_url + url;
+            $.ajaxSetup({ cache: false });
+            $.ajax({
+                url: url,
+                data: { "ID": $("#NovoLanche_IngredienteSelecionado").val() },
+                success: function (data) {
+
+                    var tbl = $("#tblIngredientes");
+                    var totalPrice = parseFloat($("#total").val()) || 0;
+
+                    tbl.append("<tr><td>" + data["Nome"] + "</td> <td>" + parseFloat(data["Preco"]).toFixed(2) + "</td>  </tr>");
+                    totalPrice += parseFloat(data["Preco"]);
+
+                    $("#total").val(totalPrice.toFixed(2));
+
+                    $("#NovoLanche_Pedido").val($("#NovoLanche_Pedido").val() + "|" + data["ID"]);
+
+
+                    alertify.success("Ingrediente adicionado.");
+
+                },
+                error: function () {
+                    $(".GifAjaxLoaderEntrega").hide();
+                    alert("Problema ao buscar produto.");
+                }
+            });
+
+
+        });
+
+        $("#limparLista").on("click", function () {
+            var tbl = $("#tblIngredientes");
+
+            tbl.remove();
+            $("#total").val(0);
+
+        });
+
+        $("#finalizar-pedido").on("click", function () {
+
+            if ($("#total").val() > 0) {
+                base_url = window.location.host;
+                url = "/Cardapio/finalizarPedido";
+                full_url = base_url + url;
+                $.ajaxSetup({ cache: false });
+                $.ajax({
+                    url: url,
+                    data: { "Pedido": $("#Pedido").val() },
+                    success: function (data) {
+
+                        var tbl = $("#tblIngredientes");
+                        document.location.href = "../Pedido/Index";
+                    },
+                    error: function () {
+                        $(".GifAjaxLoaderEntrega").hide();
+                        alert("Problema ao buscar produto.");
+                    }
+                });
+            } else {
+                alertify.error("Por favor, adicione ingredientes.");
+            }
+
+
+
+        });
+    });
+
+</script>
+    

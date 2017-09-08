@@ -9,14 +9,24 @@
 
 <input type="button" value="Montar meu lanche" id="montar-lanche" class="btn-danger" />
 <br /><br />
+@{var countFoto = 0; var img = "";}
 @foreach (var item in Model.ListaLanches)
 {
+    if(countFoto <3)
+    {
+        countFoto++;
+    }
+    else
+    {
+        countFoto = 1;
+    }
+    img = "../Images/lanche" + countFoto+".jpg";
     <legend>@item.Nome</legend>
     <div class="col-lg-12">
         <div class="col-lg-3">
 
             <figure class="figure">
-                <img src="~/Images/lanche1.jpg" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
+                <img src="@img" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
                 <figcaption class="figure-caption">@item.Nome  @item.Preco</figcaption>
             </figure>
 

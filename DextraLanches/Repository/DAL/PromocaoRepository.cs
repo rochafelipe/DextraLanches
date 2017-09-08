@@ -49,17 +49,17 @@ namespace DextraLanches.Repository.DAL
                 this.Promocoes.Add(new PromocaoEntity()
                 {
                     Nome = "Muita carne",
-                    Descricao = "A cada 3 porções de carne o cliente só paga 2. Se o lanche tiver 6 porções, ocliente pagará 4. Assim por diante...",
-                    RegraNegocio = "A cada 3 porções de carne o cliente só paga 2. Se o lanche tiver 6 porções, ocliente pagará 4. Assim por diante...",
-                    ID = 2
+                    Descricao = "A cada 3 porções de carne o cliente só paga 2. Se o lanche tiver 6 porções, o cliente pagará 4. Assim por diante...",
+                    RegraNegocio = "A cada 3 porções de carne o cliente só paga 2. Se o lanche tiver 6 porções, o cliente pagará 4. Assim por diante...",
+                    ID = 3
                 });
 
                 this.Promocoes.Add(new PromocaoEntity()
                 {
                     Nome = "Muito queijo",
-                    Descricao = "A cada 3 porções de queijo o cliente só paga 2. Se o lanche tiver 6 porções, ocliente pagará 4. Assim por diante...",
-                    RegraNegocio = "A cada 3 porções de queijo o cliente só paga 2. Se o lanche tiver 6 porções, ocliente pagará 4. Assim por diante...",
-                    ID = 3
+                    Descricao = "A cada 3 porções de queijo o cliente só paga 2. Se o lanche tiver 6 porções, o cliente pagará 4. Assim por diante...",
+                    RegraNegocio = "A cada 3 porções de queijo o cliente só paga 2. Se o lanche tiver 6 porções, o cliente pagará 4. Assim por diante...",
+                    ID = 2
                 });
                 //this.Promocoes.Add(new PromocaoEntity()
                 //{

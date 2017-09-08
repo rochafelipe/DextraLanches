@@ -20,6 +20,8 @@ namespace DextraLanches.Models
 
         public long IngredienteSelecionado { get; set; }
 
+        //Representa a lista de ingredientes pedidos
+        public string Pedido { get; set; }
        
         public decimal PrecoPromocional{get;set;}
 

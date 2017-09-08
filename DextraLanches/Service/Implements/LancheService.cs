@@ -20,7 +20,7 @@ namespace DextraLanches.Service.Implements
 
         public Models.Abstraction.BaseModel Adicionar(Models.Abstraction.BaseModel model)
         {
-            throw new NotImplementedException();
+            return this.LancheLogic.Adicionar(model);
         }
 
         public Models.Abstraction.BaseModel Atualizar(Models.Abstraction.BaseModel model)

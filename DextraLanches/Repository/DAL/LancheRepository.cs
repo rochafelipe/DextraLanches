@@ -23,6 +23,16 @@ namespace DextraLanches.Repository.DAL
 
         public Entities.BaseEntity Adicionar(Entities.BaseEntity entity)
         {
+
+            if(this.Lanches.Count > 0)
+            {
+                entity.ID = this.Lanches.Max(l => l.ID) + 1;
+            }
+            else
+            {
+                entity.ID = 1;
+            }
+
             this.Lanches.Add(entity);
 
             HttpContext.Current.Session["LanchesBD"] = Lanches;
@@ -71,6 +81,7 @@ namespace DextraLanches.Repository.DAL
                     ID = 4,
                     Ingredientes = this.IngredienteRepository.BuscarPorLanche(4).Cast<IngredienteEntity>().ToList()
                 });
+                 HttpContext.Current.Session["LanchesBD"] = Lanches;
             }
 
             return this.Lanches;

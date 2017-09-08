@@ -20,6 +20,16 @@ namespace DextraLanches.Repository.DAL
 
         public Entities.BaseEntity Adicionar(Entities.BaseEntity entity)
         {
+            if(this.Ingredientes.Count > 0)
+            {
+                entity.ID = this.Ingredientes.Max(i => i.ID) + 1;
+            }
+            else
+            {
+                entity.ID = 1 ;
+               
+            }
+
             Ingredientes.Add(entity);
             HttpContext.Current.Session["IngredientesBD"] = Ingredientes;
 
@@ -34,7 +44,7 @@ namespace DextraLanches.Repository.DAL
         public List<Entities.BaseEntity> Buscar()
         {
             //Inicia com ingredientes padrão
-            if(Ingredientes.Count <= 0)
+            if (Ingredientes.Count <= 0)
             {
                 Ingredientes.Add(new IngredienteEntity()
                 {
@@ -71,6 +81,7 @@ namespace DextraLanches.Repository.DAL
                     ID = 5,
                     Preco = 1.50M
                 });
+                HttpContext.Current.Session["IngredientesBD"] = Ingredientes;
             }
 
             return Ingredientes;
@@ -81,10 +92,11 @@ namespace DextraLanches.Repository.DAL
             if (Ingredientes.Count <= 0)
                 this.Buscar();
 
-            if(Ingredientes == null)
+            if (Ingredientes == null)
             {
                 return null;
-            }else
+            }
+            else
             {
                 return Ingredientes.Where(i => i.ID == ID).First();
             }
@@ -97,7 +109,7 @@ namespace DextraLanches.Repository.DAL
 
             List<BaseEntity> Retorno = new List<BaseEntity>();
 
-            switch(IDLanche)
+            switch (IDLanche)
             {
                 case 1:
                     Retorno = Ingredientes.Where(i => i.ID == 2 || i.ID == 3 || i.ID == 5).ToList();
@@ -127,8 +139,8 @@ namespace DextraLanches.Repository.DAL
             }
             else
             {
-                if(Ingredientes.Count > 0)
-                return Ingredientes.Remove(this.Buscar(ID));
+                if (Ingredientes.Count > 0)
+                    return Ingredientes.Remove(this.Buscar(ID));
             }
 
             return false;

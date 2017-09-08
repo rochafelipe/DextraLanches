@@ -21,7 +21,7 @@ namespace DextraLanches.Logic.Implements
 
         public Models.Abstraction.BaseModel Adicionar(Models.Abstraction.BaseModel model)
         {
-            throw new NotImplementedException();
+           return ConvertEntityToModel( this.IngredienteRepository.Adicionar( ConvertModelToEntity( model)));
         }
 
         public Models.Abstraction.BaseModel Atualizar(Models.Abstraction.BaseModel model)
